@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio | Abdulmajeed Aljuhaymi</title>
+  <meta name="description" content="Portfolio of Abdulmajeed Aljuhaymi – About, Projects, and Contact.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body class="dark">
+  <a href="#main" class="sr-only">Skip to content</a>
+  <header>
+    <div class="container nav">
+      <div class="brand">Abdulmajeed Aljuhaymi</div>
+      <nav aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+        <button id="theme-toggle" class="btn" type="button" aria-pressed="false">Light Mode</button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="container">
+    <section id="about" class="hero" aria-labelledby="about-title">
+      <img class="avatar" src="./assets/Personal_Photo.jpg" alt="Profile photo of Abdulmajeed Aljuhaymi" decoding="async">
+      <div>
+        <h1 id="about-title">Hi, I'm Abdulmajeed 👋</h1>
+        <p class="tagline">Software Engineering student crafting clean, accessible, and responsive web experiences.</p>
+        <p>
+          I’m Abdulmajeed Aljuhaymi, a Software Engineering student passionate about building user‑friendly interfaces
+          and exploring modern web technologies. I focus on applying solid engineering principles to real‑world problems
+          and creating accessible, performant experiences across devices.
+        </p>
+      </div>
+    </section>
+
+    <section id="projects" aria-labelledby="projects-title">
+      <h2 id="projects-title">Projects</h2>
+      <p class="section-subtitle">Filter and search featured work across web, AI, and tooling projects.</p>
+      <div class="project-controls">
+        <div class="filter-group" role="radiogroup" aria-label="Filter projects by category">
+          <button type="button" class="btn filter-btn" data-filter="all" aria-pressed="true">All</button>
+          <button type="button" class="btn filter-btn" data-filter="web" aria-pressed="false">Web Apps</button>
+          <button type="button" class="btn filter-btn" data-filter="ai" aria-pressed="false">AI</button>
+          <button type="button" class="btn filter-btn" data-filter="tools" aria-pressed="false">Productivity</button>
+        </div>
+        <label class="search-label" for="project-search">Search projects</label>
+        <input id="project-search" class="project-search" type="search" placeholder="Search projects..." aria-describedby="projects-status">
+      </div>
+      <p id="projects-status" class="sr-only" role="status" aria-live="polite">Showing portfolio projects.</p>
+      <div class="grid" id="project-grid">
+        <article class="card" data-category="web ai">
+          <img alt="FaceLite placeholder" loading="lazy" decoding="async" src="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' width='1200' height='630'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='%232563eb'/><stop offset='100%' stop-color='%2322d3ee'/></linearGradient></defs><rect width='100%' height='100%' fill='url(%23g)'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='Inter, Arial' font-size='48' fill='white'>FaceLite</text></svg>">
+          <div class="card-body">
+            <h3 class="card-title">FaceLite</h3>
+            <p class="card-text">A lightweight communication app that allows users to create accounts, add friends, and chat in real time. Inspired by early social platforms, it focuses on streamlined messaging and easy connections.</p>
+          </div>
+        </article>
+        <article class="card" data-category="ai tools">
+          <img alt="Resume Score Analysis placeholder" loading="lazy" decoding="async" src="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' width='1200' height='630'><defs><linearGradient id='g2' x1='1' y1='0' x2='0' y2='1'><stop offset='0%' stop-color='%2360a5fa'/><stop offset='100%' stop-color='%23a78bfa'/></linearGradient></defs><rect width='100%' height='100%' fill='url(%23g2)'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='Inter, Arial' font-size='40' fill='white'>ResumeIQ</text></svg>">
+          <div class="card-body">
+            <h3 class="card-title">Resume Score Predictor</h3>
+            <p class="card-text">An AI‑powered tool that evaluates resumes by analyzing skills, education, experience, and more. It provides a predictive score to help candidates improve applications and recruiters screen effectively.</p>
+          </div>
+        </article>
+        <article class="card" data-category="automation tools">
+          <img alt="Ramadan/Eid Bot placeholder" loading="lazy" decoding="async" src="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' width='1200' height='630'><defs><linearGradient id='g3' x1='0' y1='1' x2='1' y2='0'><stop offset='0%' stop-color='%23f59e0b'/><stop offset='100%' stop-color='%23ef4444'/></linearGradient></defs><rect width='100%' height='100%' fill='url(%23g3)'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='Inter, Arial' font-size='40' fill='white'>MubarakBot</text></svg>">
+          <div class="card-body">
+            <h3 class="card-title">Ramadan/Eid Congrats Bot</h3>
+            <p class="card-text">An automated messaging bot that sends personalized Ramadan and Eid congratulation messages to contacts, helping users stay connected with family and friends during special occasions.</p>
+          </div>
+        </article>
+      </div>
+      <p id="project-empty" class="empty-state" hidden>No projects found. Try another filter or search term.</p>
+    </section>
+
+    <section id="github" aria-labelledby="github-title" data-github-user="octocat">
+      <h2 id="github-title">Live GitHub Feed</h2>
+      <p class="section-subtitle">Pulls public repositories via the GitHub API with sorting, filtering, and fallbacks. Update the <code>data-github-user</code> attribute to your handle.</p>
+      <article class="info-card">
+        <div class="github-bar">
+          <div>
+            <p class="muted">Watching <span id="github-username-label">@octocat</span> · GitHub API</p>
+            <p id="github-status" class="sr-only" role="status" aria-live="polite">Preparing GitHub feed.</p>
+          </div>
+          <div class="github-actions">
+            <label class="switch">
+              <input type="checkbox" id="github-hide-forks" checked>
+              <span>Hide forks</span>
+            </label>
+            <button id="github-refresh" class="btn" type="button">Refresh</button>
+          </div>
+        </div>
+        <div class="github-controls" role="group" aria-label="Filter GitHub repositories">
+          <label class="input-label" for="github-sort">Sort by</label>
+          <select id="github-sort" class="select">
+            <option value="updated">Recently updated</option>
+            <option value="stars">Most stars</option>
+          </select>
+          <label class="input-label" for="github-language">Language</label>
+          <select id="github-language" class="select">
+            <option value="all">All languages</option>
+          </select>
+        </div>
+        <div class="grid github-grid" id="github-list" aria-live="polite" aria-busy="true"></div>
+        <p id="github-empty" class="empty-state" hidden>No repositories match your filters.</p>
+        <p id="github-error" class="input-feedback" role="alert" hidden></p>
+      </article>
+    </section>
+
+    <section id="learning" aria-labelledby="learning-title">
+      <h2 id="learning-title">Learning Spotlight</h2>
+      <p class="section-subtitle">Pulls a fresh technology insight from Quotable. Includes loading, retry, and graceful fallback states.</p>
+      <article class="info-card" aria-live="polite">
+        <div id="insight-content">
+          <p class="muted">Loading an insight…</p>
+        </div>
+        <div class="info-actions">
+          <button id="insight-refresh" class="btn" type="button">Load Another Insight</button>
+          <p id="insight-error" class="input-feedback" role="alert" hidden></p>
+        </div>
+      </article>
+    </section>
+
+    <section id="ai-coach" aria-labelledby="ai-coach-title">
+      <h2 id="ai-coach-title">AI Accessibility Coach</h2>
+      <p class="section-subtitle">Short tips drafted with ChatGPT and refined for this portfolio. Cycle through to keep accessibility top of mind.</p>
+      <article class="info-card">
+        <div id="ai-tip" class="ai-tip">
+          <h3 id="ai-tip-title" class="card-title">Accessibility Tip</h3>
+          <p id="ai-tip-text" class="card-text">Tap the button to get a personalized guidance snippet.</p>
+          <p id="ai-tip-meta" class="ai-tip-meta muted">Generated with AI, reviewed by Abdulmajeed.</p>
+        </div>
+        <div class="info-actions">
+          <button id="ai-tip-next" class="btn primary" type="button">Show Another Tip</button>
+        </div>
+      </article>
+    </section>
+
+    <section id="contact" aria-labelledby="contact-title">
+      <h2 id="contact-title">Contact</h2>
+      <form id="contact-form" novalidate data-mailto="abdulmajeed.aljuhaymi@example.com">
+        <div class="input-group">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" placeholder="Your full name" aria-describedby="name-feedback" required>
+          <p id="name-feedback" class="input-feedback" aria-live="assertive"></p>
+        </div>
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com" aria-describedby="email-feedback" required>
+          <p id="email-feedback" class="input-feedback" aria-live="assertive"></p>
+        </div>
+        <div class="input-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="How can I help?" aria-describedby="message-feedback" required></textarea>
+          <p id="message-feedback" class="input-feedback" aria-live="assertive"></p>
+        </div>
+        <div class="actions">
+          <button class="btn primary" type="submit">Send</button>
+          <button class="btn" type="reset">Reset</button>
+        </div>
+        <p id="form-status" class="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      © <span id="year"></span> Abdulmajeed Aljuhaymi. All rights reserved.
+    </div>
+  </footer>
+
+  <script src="./js/script.js"></script>
+</body>
+</html>
