@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,6 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./css/style.css">
 </head>
+
 <body class="dark">
   <a href="#main" class="sr-only">Skip to content</a>
   <header>
@@ -26,7 +28,8 @@
 
   <main id="main" class="container">
     <section id="about" class="hero" aria-labelledby="about-title">
-      <img class="avatar" src="./assets/Personal_Photo.jpg" alt="Profile photo of Abdulmajeed Aljuhaymi" decoding="async">
+      <img class="avatar" src="./assets/images/Personal_Photo.jpg" alt="Profile photo of Abdulmajeed Aljuhaymi"
+        decoding="async">
       <div>
         <h1 id="about-title">Hi, I'm Abdulmajeed 👋</h1>
         <p class="tagline">Software Engineering student crafting clean, accessible, and responsive web experiences.</p>
@@ -49,42 +52,53 @@
           <button type="button" class="btn filter-btn" data-filter="tools" aria-pressed="false">Productivity</button>
         </div>
         <label class="search-label" for="project-search">Search projects</label>
-        <input id="project-search" class="project-search" type="search" placeholder="Search projects..." aria-describedby="projects-status">
+        <input id="project-search" class="project-search" type="search" placeholder="Search projects..."
+          aria-describedby="projects-status">
       </div>
       <p id="projects-status" class="sr-only" role="status" aria-live="polite">Showing portfolio projects.</p>
       <div class="grid" id="project-grid">
         <article class="card" data-category="web ai">
-          <img alt="FaceLite placeholder" loading="lazy" decoding="async" src="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' width='1200' height='630'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='%232563eb'/><stop offset='100%' stop-color='%2322d3ee'/></linearGradient></defs><rect width='100%' height='100%' fill='url(%23g)'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='Inter, Arial' font-size='48' fill='white'>FaceLite</text></svg>">
+          <img alt="FaceLite placeholder" loading="lazy" decoding="async"
+            src="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' width='1200' height='630'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='%232563eb'/><stop offset='100%' stop-color='%2322d3ee'/></linearGradient></defs><rect width='100%' height='100%' fill='url(%23g)'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='Inter, Arial' font-size='48' fill='white'>FaceLite</text></svg>">
           <div class="card-body">
             <h3 class="card-title">FaceLite</h3>
-            <p class="card-text">A lightweight communication app that allows users to create accounts, add friends, and chat in real time. Inspired by early social platforms, it focuses on streamlined messaging and easy connections.</p>
+            <p class="card-text">A lightweight communication app that allows users to create accounts, add friends, and
+              chat in real time. Inspired by early social platforms, it focuses on streamlined messaging and easy
+              connections.</p>
           </div>
         </article>
         <article class="card" data-category="ai tools">
-          <img alt="Resume Score Analysis placeholder" loading="lazy" decoding="async" src="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' width='1200' height='630'><defs><linearGradient id='g2' x1='1' y1='0' x2='0' y2='1'><stop offset='0%' stop-color='%2360a5fa'/><stop offset='100%' stop-color='%23a78bfa'/></linearGradient></defs><rect width='100%' height='100%' fill='url(%23g2)'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='Inter, Arial' font-size='40' fill='white'>ResumeIQ</text></svg>">
+          <img alt="Resume Score Analysis placeholder" loading="lazy" decoding="async"
+            src="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' width='1200' height='630'><defs><linearGradient id='g2' x1='1' y1='0' x2='0' y2='1'><stop offset='0%' stop-color='%2360a5fa'/><stop offset='100%' stop-color='%23a78bfa'/></linearGradient></defs><rect width='100%' height='100%' fill='url(%23g2)'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='Inter, Arial' font-size='40' fill='white'>ResumeIQ</text></svg>">
           <div class="card-body">
             <h3 class="card-title">Resume Score Predictor</h3>
-            <p class="card-text">An AI‑powered tool that evaluates resumes by analyzing skills, education, experience, and more. It provides a predictive score to help candidates improve applications and recruiters screen effectively.</p>
+            <p class="card-text">An AI‑powered tool that evaluates resumes by analyzing skills, education, experience,
+              and more. It provides a predictive score to help candidates improve applications and recruiters screen
+              effectively.</p>
           </div>
         </article>
         <article class="card" data-category="automation tools">
-          <img alt="Ramadan/Eid Bot placeholder" loading="lazy" decoding="async" src="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' width='1200' height='630'><defs><linearGradient id='g3' x1='0' y1='1' x2='1' y2='0'><stop offset='0%' stop-color='%23f59e0b'/><stop offset='100%' stop-color='%23ef4444'/></linearGradient></defs><rect width='100%' height='100%' fill='url(%23g3)'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='Inter, Arial' font-size='40' fill='white'>MubarakBot</text></svg>">
+          <img alt="Ramadan/Eid Bot placeholder" loading="lazy" decoding="async"
+            src="data:image/svg+xml;utf8,<?xml version='1.0' encoding='UTF-8'?><svg xmlns='http://www.w3.org/2000/svg' width='1200' height='630'><defs><linearGradient id='g3' x1='0' y1='1' x2='1' y2='0'><stop offset='0%' stop-color='%23f59e0b'/><stop offset='100%' stop-color='%23ef4444'/></linearGradient></defs><rect width='100%' height='100%' fill='url(%23g3)'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='Inter, Arial' font-size='40' fill='white'>MubarakBot</text></svg>">
           <div class="card-body">
             <h3 class="card-title">Ramadan/Eid Congrats Bot</h3>
-            <p class="card-text">An automated messaging bot that sends personalized Ramadan and Eid congratulation messages to contacts, helping users stay connected with family and friends during special occasions.</p>
+            <p class="card-text">An automated messaging bot that sends personalized Ramadan and Eid congratulation
+              messages to contacts, helping users stay connected with family and friends during special occasions.</p>
           </div>
         </article>
       </div>
       <p id="project-empty" class="empty-state" hidden>No projects found. Try another filter or search term.</p>
     </section>
 
-    <section id="github" aria-labelledby="github-title" data-github-user="octocat">
-      <h2 id="github-title">Live GitHub Feed</h2>
-      <p class="section-subtitle">Pulls public repositories via the GitHub API with sorting, filtering, and fallbacks. Update the <code>data-github-user</code> attribute to your handle.</p>
+    <section id="github" aria-labelledby="github-title" data-github-user="AbdulmajeedALJ">
+      <h2 id="github-title">My GitHub Updates</h2>
+      <p class="section-subtitle">Latest repositories from my account with sorting, language filters, and offline
+        fallbacks.</p>
       <article class="info-card">
         <div class="github-bar">
           <div>
-            <p class="muted">Watching <span id="github-username-label">@octocat</span> · GitHub API</p>
+            <p class="muted"><span id="github-heading-text">My recent GitHub updates</span> <span
+                id="github-username-label">@octocat</span></p>
             <p id="github-status" class="sr-only" role="status" aria-live="polite">Preparing GitHub feed.</p>
           </div>
           <div class="github-actions">
@@ -114,7 +128,8 @@
 
     <section id="learning" aria-labelledby="learning-title">
       <h2 id="learning-title">Learning Spotlight</h2>
-      <p class="section-subtitle">Pulls a fresh technology insight from Quotable. Includes loading, retry, and graceful fallback states.</p>
+      <p class="section-subtitle">Pulls a fresh technology insight from Quotable. Includes loading, retry, and graceful
+        fallback states.</p>
       <article class="info-card" aria-live="polite">
         <div id="insight-content">
           <p class="muted">Loading an insight…</p>
@@ -128,7 +143,8 @@
 
     <section id="ai-coach" aria-labelledby="ai-coach-title">
       <h2 id="ai-coach-title">AI Accessibility Coach</h2>
-      <p class="section-subtitle">Short tips drafted with ChatGPT and refined for this portfolio. Cycle through to keep accessibility top of mind.</p>
+      <p class="section-subtitle">Short tips drafted with ChatGPT and refined for this portfolio. Cycle through to keep
+        accessibility top of mind.</p>
       <article class="info-card">
         <div id="ai-tip" class="ai-tip">
           <h3 id="ai-tip-title" class="card-title">Accessibility Tip</h3>
@@ -146,17 +162,20 @@
       <form id="contact-form" novalidate data-mailto="abdulmajeed.aljuhaymi@example.com">
         <div class="input-group">
           <label for="name">Name</label>
-          <input id="name" name="name" type="text" placeholder="Your full name" aria-describedby="name-feedback" required>
+          <input id="name" name="name" type="text" placeholder="Your full name" aria-describedby="name-feedback"
+            required>
           <p id="name-feedback" class="input-feedback" aria-live="assertive"></p>
         </div>
         <div class="input-group">
           <label for="email">Email</label>
-          <input id="email" name="email" type="email" placeholder="you@example.com" aria-describedby="email-feedback" required>
+          <input id="email" name="email" type="email" placeholder="you@example.com" aria-describedby="email-feedback"
+            required>
           <p id="email-feedback" class="input-feedback" aria-live="assertive"></p>
         </div>
         <div class="input-group">
           <label for="message">Message</label>
-          <textarea id="message" name="message" placeholder="How can I help?" aria-describedby="message-feedback" required></textarea>
+          <textarea id="message" name="message" placeholder="How can I help?" aria-describedby="message-feedback"
+            required></textarea>
           <p id="message-feedback" class="input-feedback" aria-live="assertive"></p>
         </div>
         <div class="actions">
@@ -176,4 +195,5 @@
 
   <script src="./js/script.js"></script>
 </body>
+
 </html>

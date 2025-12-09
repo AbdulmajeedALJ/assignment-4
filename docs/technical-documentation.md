@@ -13,7 +13,8 @@ assignment-3/
 ├── js/
 │   └── script.js             # Interactive behaviour and state management
 ├── assets/
-│   └── Personal_Photo.jpg    # Profile image used in the hero
+│   └── images/
+│       └── Personal_Photo.jpg    # Profile image used in the hero
 └── docs/
     ├── ai-usage-report.md    # Required AI usage log
     └── technical-documentation.md
@@ -33,7 +34,7 @@ assignment-3/
 - **Learning Spotlight**: Displays API-driven insights with loading, success, and fallback states.
 - **AI Accessibility Coach**: Cycles through AI-authored tips with clear attribution.
 - **Contact**: Demo form with inline validation, success messaging, and ARIA live regions.
-- **Live GitHub Feed**: Fetches public repositories via the GitHub API, with sorting/filtering controls and graceful fallbacks.
+- **Live GitHub Feed**: Fetches public repositories via the GitHub API, with sorting/filtering controls, offline-aware fallbacks, saved-cache reuse, and optional PAT support (`data-github-token` or `localStorage` key `github-pat`) to avoid rate limits.
 
 ### CSS Architecture
 - **Theme System**: Light “sky” and dark “galaxy” palettes powered by CSS custom properties. `body.light` and `body.dark` toggle each variable set.
@@ -55,7 +56,7 @@ assignment-3/
   - Pulls up to 40 public repos from the GitHub API for the configured username (`data-github-user` attribute).
   - Supports sorting by recent updates or stars, filtering by language, and toggling forks.
   - Persists preferences (`sort`, `language`, `hideForks`) in `localStorage` under `github-feed-preferences`.
-  - Falls back to curated static entries with a friendly alert if the API fails or rate-limits.
+  - Falls back to curated static entries, caches the last successful fetch per user, detects offline/timeouts, and accepts an optional PAT (`data-github-token` or `localStorage` key `github-pat`) to reduce rate-limit errors.
 - **Learning Spotlight**:
   - Fetches quotes from the Quotable API.
   - Shows loading state, handles non-200 responses, and falls back to AI-curated messages when offline.

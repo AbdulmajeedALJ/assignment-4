@@ -233,6 +233,10 @@ const $ = (selector, context = document) => context.querySelector(selector);
   const hideForksToggle = $('#github-hide-forks');
   const emptyState = $('#github-empty');
   const usernameLabel = $('#github-username-label');
+  const headingText = $('#github-heading-text');
+  const tokenAttr = section ? section.dataset.githubToken : '';
+  const storedToken = localStorage.getItem('github-pat') || '';
+  const authToken = (tokenAttr || storedToken).trim();
   if (
     !section ||
     !list ||
@@ -243,12 +247,14 @@ const $ = (selector, context = document) => context.querySelector(selector);
     !languageSelect ||
     !hideForksToggle ||
     !emptyState ||
-    !usernameLabel
+    !usernameLabel ||
+    !headingText
   ) {
     return;
   }
 
   const username = section.dataset.githubUser || 'octocat';
+  const cacheKey = `github-feed-cache:${username}`;
   usernameLabel.textContent = `@${username}`;
 
   const preferencesKey = 'github-feed-preferences';
@@ -269,42 +275,67 @@ const $ = (selector, context = document) => context.querySelector(selector);
 
   const fallbackRepos = [
     {
-      id: 'fallback-portfolio',
-      name: 'portfolio-refresh',
-      description: 'Static fallback entry to demonstrate GitHub feed formatting and metadata.',
-      stars: 18,
-      forks: 2,
-      language: 'JavaScript',
-      updated: '2024-04-15T12:00:00Z',
-      url: 'https://github.com/octocat/Hello-World',
-      fork: false,
-    },
-    {
-      id: 'fallback-utilities',
-      name: 'workflow-automation',
-      description: 'CLI scripts for housekeeping tasks like linting, backups, and image compression.',
-      stars: 11,
+      id: 'fallback-facelite',
+      name: 'facelite',
+      description: 'Lightweight real-time messaging app for study groups with presence indicators and themed rooms.',
+      stars: 12,
       forks: 1,
-      language: 'Python',
-      updated: '2024-02-02T09:30:00Z',
-      url: 'https://github.com/octocat/Spoon-Knife',
+      language: 'JavaScript',
+      updated: '2024-04-18T12:00:00Z',
+      url: 'https://github.com/AbdulmajeedALJ/facelite',
       fork: false,
     },
     {
-      id: 'fallback-learning',
-      name: 'learning-lab',
-      description: 'Notes and small experiments exploring APIs, fetch caching, and accessibility utilities.',
-      stars: 7,
+      id: 'fallback-resumeiq',
+      name: 'resume-score-predictor',
+      description: 'AI-powered resume evaluator that scores skills, education, and experience with actionable tips.',
+      stars: 9,
       forks: 0,
       language: 'TypeScript',
+      updated: '2024-02-02T09:30:00Z',
+      url: 'https://github.com/AbdulmajeedALJ/resume-score-predictor',
+      fork: false,
+    },
+    {
+      id: 'fallback-mubarakbot',
+      name: 'ramadan-eid-congrats-bot',
+      description: 'Automation bot that schedules localized greetings and tracks engagement analytics.',
+      stars: 6,
+      forks: 0,
+      language: 'Python',
       updated: '2023-11-10T16:10:00Z',
-      url: 'https://github.com/octocat/Hello-World',
+      url: 'https://github.com/AbdulmajeedALJ/ramadan-eid-congrats-bot',
       fork: false,
     },
   ];
 
   const savePreferences = () => {
     localStorage.setItem(preferencesKey, JSON.stringify(preferences));
+  };
+
+  const loadCachedRepos = () => {
+    try {
+      const cached = JSON.parse(localStorage.getItem(cacheKey) || 'null');
+      if (!cached || !Array.isArray(cached.repos) || !cached.repos.length) return null;
+      return cached;
+    } catch (error) {
+      console.warn('[githubFeed] Unable to parse cached repos', error);
+      return null;
+    }
+  };
+
+  const saveCachedRepos = () => {
+    try {
+      const payload = { fetchedAt: new Date().toISOString(), repos };
+      localStorage.setItem(cacheKey, JSON.stringify(payload));
+    } catch (error) {
+      console.warn('[githubFeed] Unable to save cached repos', error);
+    }
+  };
+
+  const updateHeadingText = () => {
+    headingText.textContent =
+      preferences.sort === 'stars' ? 'Most starred GitHub repos' : 'My recent GitHub updates';
   };
 
   const setStatus = (message, isBusy = false) => {
@@ -441,17 +472,40 @@ const $ = (selector, context = document) => context.querySelector(selector);
   });
 
   const fetchRepos = async (force = false) => {
+    updateHeadingText();
+    const cached = loadCachedRepos();
     if (repos.length && !force) {
       applyFilters();
       return;
     }
-    setStatus('Loading latest repositories from GitHub…', true);
+
+    if (cached && !repos.length) {
+      repos = cached.repos;
+      setLanguagesFromRepos();
+      applyFilters();
+      const cachedDate = cached.fetchedAt ? formatDate(cached.fetchedAt) : '';
+      const cachedLabel = cachedDate && cachedDate !== 'Invalid Date' ? cachedDate : 'earlier';
+      setStatus(`Showing saved GitHub data from ${cachedLabel} while refreshing…`, true);
+    } else {
+      setStatus(force ? 'Refreshing GitHub feed…' : 'Loading latest repositories from GitHub…', true);
+    }
     clearError();
     emptyState.hidden = true;
+    let timeoutId;
     try {
+      const controller = new AbortController();
+      timeoutId = window.setTimeout(() => controller.abort(), 7000);
+      const headers = { Accept: 'application/vnd.github+json' };
+      if (authToken) {
+        headers.Authorization = `Bearer ${authToken}`;
+      }
       const response = await fetch(
         `https://api.github.com/users/${encodeURIComponent(username)}/repos?sort=updated&per_page=40`,
-        { headers: { Accept: 'application/vnd.github+json' }, cache: 'no-store' },
+        {
+          headers,
+          cache: 'no-store',
+          signal: controller.signal,
+        },
       );
       if (!response.ok) {
         throw new Error(`GitHub responded with ${response.status}`);
@@ -460,15 +514,25 @@ const $ = (selector, context = document) => context.querySelector(selector);
       repos = data.filter((repo) => !repo.archived).map(mapRepo);
       setLanguagesFromRepos();
       applyFilters();
+      saveCachedRepos();
       setStatus('GitHub data loaded.', false);
     } catch (error) {
       console.error('[githubFeed]', error);
+      if (repos.length) {
+        showError('Unable to refresh GitHub right now. Showing your saved feed.');
+        setStatus('Using saved GitHub data.', false);
+        return;
+      }
       repos = fallbackRepos;
       languages = new Set(fallbackRepos.map((repo) => repo.language));
       renderLanguageOptions();
       applyFilters();
       showError('Unable to reach GitHub right now. Showing curated highlights instead.');
       setStatus('Using fallback GitHub data.', false);
+    } finally {
+      if (timeoutId) {
+        window.clearTimeout(timeoutId);
+      }
     }
   };
 
@@ -481,6 +545,7 @@ const $ = (selector, context = document) => context.querySelector(selector);
   sortSelect.addEventListener('change', () => {
     preferences.sort = sortSelect.value;
     savePreferences();
+    updateHeadingText();
     applyFilters();
   });
   languageSelect.addEventListener('change', () => {
