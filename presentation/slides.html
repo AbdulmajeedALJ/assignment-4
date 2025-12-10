@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Presentation | Abdulmajeed Aljuhaymi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --accent: #06b6d4;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
+            --gradient-3: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+            --gradient-text: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #f472b6 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--darker);
+            color: var(--light);
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .presentation {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem;
+            background: var(--darker);
+            opacity: 0;
+            transform: translateX(100px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .slide.active {
+            display: flex;
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 80%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(6, 182, 212, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 500;
+            letter-spacing: 0.1em;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--light);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        p {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 1.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 2rem;
+        }
+
+        .highlight {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .emoji {
+            font-size: 1.2em;
+            margin: 0 0.25rem;
+        }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 0;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Tech Stack */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .tech-badge {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .tech-badge:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* Architecture Diagram */
+        .architecture {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .arch-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(99, 102, 241, 0.5);
+            border-radius: 12px;
+            padding: 1.25rem 2rem;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .arch-arrow {
+            font-size: 2rem;
+            color: var(--accent);
+        }
+
+        /* List Styles */
+        .content-list {
+            text-align: left;
+            margin: 1.5rem auto;
+            max-width: 800px;
+        }
+
+        .content-list li {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .content-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* Challenge Cards */
+        .challenge-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+            text-align: left;
+        }
+
+        .challenge-card {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(249, 115, 22, 0.1) 100%);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .challenge-card.solution {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%);
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+
+        .challenge-card h3 {
+            color: #f87171;
+        }
+
+        .challenge-card.solution h3 {
+            color: #4ade80;
+        }
+
+        /* AI Section */
+        .ai-tools {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .ai-tool {
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            min-width: 200px;
+        }
+
+        .ai-tool h3 {
+            color: #a78bfa;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Navigation */
+        .nav-container {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: var(--gradient-2);
+            transition: width 0.3s ease;
+            z-index: 100;
+        }
+
+        /* Table */
+        .outcome-table {
+            width: 100%;
+            max-width: 900px;
+            margin: 1.5rem auto;
+            border-collapse: collapse;
+        }
+
+        .outcome-table th,
+        .outcome-table td {
+            padding: 1rem 1.5rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .outcome-table th {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .outcome-table td {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Future List */
+        .future-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+            text-align: left;
+        }
+
+        .future-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.25rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .future-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .future-item p {
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        /* Thank You Section */
+        .thank-you h1 {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .contact-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 1.25rem;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--accent);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            background: var(--accent);
+            color: var(--dark);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide.active .slide-content>* {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .slide.active .slide-content>*:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .slide.active .slide-content>*:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .slide.active .slide-content>*:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .slide.active .slide-content>*:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .slide.active .slide-content>*:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 2rem;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1.125rem;
+            }
+
+            .feature-grid,
+            .challenge-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="progress-bar" id="progress"></div>
+
+    <div class="presentation">
+        <!-- Slide 1: Title -->
+        <div class="slide active" id="slide-1">
+            <span class="slide-number">01 / 10</span>
+            <div class="slide-content">
+                <h1>Personal Portfolio<br>Web Application</h1>
+                <p class="subtitle">SWE363 – Assignment 4 Final Presentation</p>
+                <p style="font-size: 1.5rem; margin-top: 2rem;">
+                    <span class="highlight">Abdulmajeed Aljuhaymi</span>
+                </p>
+                <p style="font-size: 1rem; color: rgba(255,255,255,0.5); margin-top: 1rem;">
+                    December 2024
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Introduction -->
+        <div class="slide" id="slide-2">
+            <span class="slide-number">02 / 10</span>
+            <div class="slide-content">
+                <h2><span class="emoji">🎯</span> Project Overview</h2>
+                <p class="subtitle">What I Built & Why</p>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">💼</div>
+                        <h3>Personal Portfolio</h3>
+                        <p>A professional showcase of my projects, skills, and journey as a Software Engineering
+                            student.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">♿</div>
+                        <h3>Accessibility First</h3>
+                        <p>Built with WCAG guidelines in mind — semantic HTML, ARIA labels, and keyboard navigation.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🚀</div>
+                        <h3>Zero Dependencies</h3>
+                        <p>Pure HTML, CSS, and JavaScript — no frameworks, no build tools, deployable anywhere.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🤖</div>
+                        <h3>AI-Enhanced</h3>
+                        <p>Leveraged AI tools for code generation, accessibility tips, and continuous improvement.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Personal Motivation -->
+        <div class="slide" id="slide-3">
+            <span class="slide-number">03 / 10</span>
+            <div class="slide-content">
+                <h2><span class="emoji">💡</span> Personal Motivation</h2>
+                <ul class="content-list">
+                    <li>Create a professional presence to showcase my work to recruiters and collaborators</li>
+                    <li>Apply web development skills learned throughout SWE363 to a real-world project</li>
+                    <li>Explore modern accessibility practices and inclusive design</li>
+                    <li>Build something I can continue to improve and use beyond this course</li>
+                    <li>Experiment with AI-assisted development workflow</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 4: Key Features Demo -->
+        <div class="slide" id="slide-4">
+            <span class="slide-number">04 / 10</span>
+            <div class="slide-content">
+                <h2><span class="emoji">✨</span> Key Features</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🎨</div>
+                        <h3>Dynamic Theming</h3>
+                        <p>Light/Dark mode with localStorage persistence and smooth transitions.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔍</div>
+                        <h3>Project Gallery</h3>
+                        <p>Category filters, live search, and empty state handling.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>GitHub Integration</h3>
+                        <p>Live API feed with sorting, filtering, and offline fallbacks.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💬</div>
+                        <h3>Learning Spotlight</h3>
+                        <p>API-driven quotes with loading states and graceful error handling.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🧠</div>
+                        <h3>AI Accessibility Coach</h3>
+                        <p>ChatGPT-authored tips that cycle on demand with attribution.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📧</div>
+                        <h3>Contact Form</h3>
+                        <p>Inline validation, ARIA live regions, and mailto handoff.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Technical Architecture -->
+        <div class="slide" id="slide-5">
+            <span class="slide-number">05 / 10</span>
+            <div class="slide-content">
+                <h2><span class="emoji">🏗️</span> Technical Architecture</h2>
+                <div class="architecture">
+                    <div class="arch-box">HTML5<br><small>Semantic Markup</small></div>
+                    <span class="arch-arrow">→</span>
+                    <div class="arch-box">CSS3<br><small>Custom Properties</small></div>
+                    <span class="arch-arrow">→</span>
+                    <div class="arch-box">Vanilla JS<br><small>ES2020+ Modules</small></div>
+                    <span class="arch-arrow">→</span>
+                    <div class="arch-box">APIs<br><small>GitHub + Quotable</small></div>
+                </div>
+                <div class="tech-stack">
+                    <span class="tech-badge">CSS Grid & Flexbox</span>
+                    <span class="tech-badge">CSS Custom Properties</span>
+                    <span class="tech-badge">LocalStorage</span>
+                    <span class="tech-badge">Fetch API</span>
+                    <span class="tech-badge">ARIA Attributes</span>
+                    <span class="tech-badge">prefers-reduced-motion</span>
+                    <span class="tech-badge">Lazy Loading</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: AI Integration -->
+        <div class="slide" id="slide-6">
+            <span class="slide-number">06 / 10</span>
+            <div class="slide-content">
+                <h2><span class="emoji">🤖</span> AI Integration</h2>
+                <p class="subtitle">How I Used AI Throughout Development</p>
+                <div class="ai-tools">
+                    <div class="ai-tool">
+                        <h3>ChatGPT (Codex CLI)</h3>
+                        <p>Primary code assistant</p>
+                    </div>
+                    <div class="ai-tool">
+                        <h3>ChatGPT (Web)</h3>
+                        <p>Content & copy drafting</p>
+                    </div>
+                </div>
+                <ul class="content-list">
+                    <li><strong>Code Generation:</strong> Scaffolding, API integration, animation utilities</li>
+                    <li><strong>Debugging:</strong> Resolving CORS issues, state persistence bugs</li>
+                    <li><strong>Accessibility:</strong> ARIA patterns, live regions, focus management</li>
+                    <li><strong>Documentation:</strong> Technical docs and usage reports</li>
+                </ul>
+                <p style="font-size: 1rem; color: rgba(255,255,255,0.5); margin-top: 1.5rem;">
+                    All AI outputs were reviewed, customized, and documented in <code>docs/ai-usage-report.md</code>
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 7: Challenges & Solutions -->
+        <div class="slide" id="slide-7">
+            <span class="slide-number">07 / 10</span>
+            <div class="slide-content">
+                <h2><span class="emoji">🧩</span> Challenges & Solutions</h2>
+                <div class="challenge-grid">
+                    <div class="challenge-card">
+                        <h3>Challenge: GitHub API Rate Limits</h3>
+                        <p>Free tier limits requests, causing errors during testing.</p>
+                    </div>
+                    <div class="challenge-card solution">
+                        <h3>Solution: Smart Caching</h3>
+                        <p>LocalStorage caching, optional PAT support, and curated fallback repos.</p>
+                    </div>
+                    <div class="challenge-card">
+                        <h3>Challenge: State Persistence</h3>
+                        <p>User preferences resetting on page reload.</p>
+                    </div>
+                    <div class="challenge-card solution">
+                        <h3>Solution: localStorage Architecture</h3>
+                        <p>Consistent key-value storage for theme, filters, and preferences.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Lessons Learned -->
+        <div class="slide" id="slide-8">
+            <span class="slide-number">08 / 10</span>
+            <div class="slide-content">
+                <h2><span class="emoji">📚</span> Lessons Learned</h2>
+                <ul class="content-list">
+                    <li><strong>CSS Custom Properties</strong> enable powerful theme systems without duplicating
+                        selectors</li>
+                    <li><strong>Progressive Enhancement</strong> ensures functionality even with JavaScript disabled
+                    </li>
+                    <li><strong>Graceful Degradation</strong> for API failures keeps the user experience smooth</li>
+                    <li><strong>Accessibility</strong> isn't an afterthought — it should be built in from day one</li>
+                    <li><strong>AI is a Tool</strong> — it accelerates development but requires human review and
+                        customization</li>
+                    <li><strong>Documentation</strong> matters — both for others and for your future self</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 9: Outcomes & Future -->
+        <div class="slide" id="slide-9">
+            <span class="slide-number">09 / 10</span>
+            <div class="slide-content">
+                <h2><span class="emoji">🎯</span> Outcomes & Future Plans</h2>
+                <table class="outcome-table">
+                    <tr>
+                        <th>Rubric Area</th>
+                        <th>Achievement</th>
+                    </tr>
+                    <tr>
+                        <td>Functionality</td>
+                        <td>All features implemented and working</td>
+                    </tr>
+                    <tr>
+                        <td>Code Quality</td>
+                        <td>Clean, modular, well-documented code</td>
+                    </tr>
+                    <tr>
+                        <td>Accessibility</td>
+                        <td>ARIA labels, keyboard nav, reduced-motion</td>
+                    </tr>
+                    <tr>
+                        <td>AI Integration</td>
+                        <td>Documented, responsible, effective use</td>
+                    </tr>
+                </table>
+                <div class="future-grid">
+                    <div class="future-item">
+                        <span class="future-icon">📱</span>
+                        <p><strong>v1.1:</strong> PWA features & offline support</p>
+                    </div>
+                    <div class="future-item">
+                        <span class="future-icon">🌐</span>
+                        <p><strong>v1.2:</strong> Multi-language support</p>
+                    </div>
+                    <div class="future-item">
+                        <span class="future-icon">⚡</span>
+                        <p><strong>v2.0:</strong> Backend integration & real contact form</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Thank You -->
+        <div class="slide" id="slide-10">
+            <span class="slide-number">10 / 10</span>
+            <div class="slide-content thank-you">
+                <h1>Thank You! <span class="emoji">🙏</span></h1>
+                <p class="subtitle">Questions?</p>
+                <div class="contact-links">
+                    <a href="https://github.com/AbdulmajeedALJ" class="contact-link" target="_blank">
+                        GitHub
+                    </a>
+                    <a href="mailto:abdulmajeed.aljuhaymi@example.com" class="contact-link">
+                        Email
+                    </a>
+                </div>
+                <p style="font-size: 1rem; color: rgba(255,255,255,0.4); margin-top: 3rem;">
+                    Live Demo: Open <code>index.html</code> in your browser
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-container">
+        <button class="nav-btn" id="prev-btn" disabled>← Previous</button>
+        <button class="nav-btn" id="next-btn">Next →</button>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const progress = document.getElementById('progress');
+        let currentSlide = 0;
+
+        function updateSlide(newIndex) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = newIndex;
+            slides[currentSlide].classList.add('active');
+
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === slides.length - 1;
+
+            progress.style.width = ((currentSlide + 1) / slides.length * 100) + '%';
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) updateSlide(currentSlide - 1);
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < slides.length - 1) updateSlide(currentSlide + 1);
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                if (currentSlide < slides.length - 1) updateSlide(currentSlide + 1);
+            } else if (e.key === 'ArrowLeft') {
+                if (currentSlide > 0) updateSlide(currentSlide - 1);
+            }
+        });
+
+        // Initialize progress
+        progress.style.width = (1 / slides.length * 100) + '%';
+    </script>
+</body>
+
+</html>
